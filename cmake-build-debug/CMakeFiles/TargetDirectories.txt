@@ -1,0 +1,4 @@
+/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir
+/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider_autogen.dir
