@@ -1,42 +1,11 @@
 /home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/SurfaceSubdivider_autogen/6YEA5652QU/moc_RenderWindow.cpp: /home/wajov/Projects/SurfaceSubdivider/include/RenderWindow.h \
   /home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/SurfaceSubdivider_autogen/moc_predefs.h \
+  /home/wajov/Projects/SurfaceSubdivider/include/Halfedge.h \
   /home/wajov/Projects/SurfaceSubdivider/include/Mesh.h \
-  /home/wajov/Projects/SurfaceSubdivider/include/Model.h \
   /home/wajov/Projects/SurfaceSubdivider/include/RenderWidget.h \
   /home/wajov/Projects/SurfaceSubdivider/include/Vertex.h \
   /usr/include/GL/gl.h \
   /usr/include/assert.h \
-  /usr/include/assimp/Compiler/poppack1.h \
-  /usr/include/assimp/Compiler/pushpack1.h \
-  /usr/include/assimp/Importer.hpp \
-  /usr/include/assimp/MathFunctions.h \
-  /usr/include/assimp/aabb.h \
-  /usr/include/assimp/anim.h \
-  /usr/include/assimp/camera.h \
-  /usr/include/assimp/color4.h \
-  /usr/include/assimp/color4.inl \
-  /usr/include/assimp/config.h \
-  /usr/include/assimp/defs.h \
-  /usr/include/assimp/light.h \
-  /usr/include/assimp/material.h \
-  /usr/include/assimp/material.inl \
-  /usr/include/assimp/matrix3x3.h \
-  /usr/include/assimp/matrix3x3.inl \
-  /usr/include/assimp/matrix4x4.h \
-  /usr/include/assimp/matrix4x4.inl \
-  /usr/include/assimp/mesh.h \
-  /usr/include/assimp/metadata.h \
-  /usr/include/assimp/postprocess.h \
-  /usr/include/assimp/quaternion.h \
-  /usr/include/assimp/quaternion.inl \
-  /usr/include/assimp/scene.h \
-  /usr/include/assimp/texture.h \
-  /usr/include/assimp/types.h \
-  /usr/include/assimp/vector2.h \
-  /usr/include/assimp/vector2.inl \
-  /usr/include/assimp/vector3.h \
-  /usr/include/assimp/vector3.inl \
-  /usr/include/bits/byteswap.h \
   /usr/include/bits/cpu-set.h \
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
@@ -48,9 +17,7 @@
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/pthreadtypes.h \
   /usr/include/bits/sched.h \
-  /usr/include/bits/select.h \
   /usr/include/bits/setjmp.h \
-  /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdio_lim.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -72,7 +39,6 @@
   /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/types/locale_t.h \
   /usr/include/bits/types/mbstate_t.h \
-  /usr/include/bits/types/sigset_t.h \
   /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/struct_itimerspec.h \
   /usr/include/bits/types/struct_sched_param.h \
@@ -83,7 +49,6 @@
   /usr/include/bits/types/timer_t.h \
   /usr/include/bits/types/wint_t.h \
   /usr/include/bits/typesizes.h \
-  /usr/include/bits/uintn-identity.h \
   /usr/include/bits/wchar.h \
   /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
@@ -180,7 +145,6 @@
   /usr/include/c++/10.2.0/bits/uses_allocator.h \
   /usr/include/c++/10.2.0/bits/vector.tcc \
   /usr/include/c++/10.2.0/cctype \
-  /usr/include/c++/10.2.0/cfloat \
   /usr/include/c++/10.2.0/climits \
   /usr/include/c++/10.2.0/clocale \
   /usr/include/c++/10.2.0/cmath \
@@ -189,7 +153,6 @@
   /usr/include/c++/10.2.0/cstddef \
   /usr/include/c++/10.2.0/cstdint \
   /usr/include/c++/10.2.0/cstdlib \
-  /usr/include/c++/10.2.0/cstring \
   /usr/include/c++/10.2.0/cwchar \
   /usr/include/c++/10.2.0/cwctype \
   /usr/include/c++/10.2.0/debug/assertions.h \
@@ -257,7 +220,6 @@
   /usr/include/c++/10.2.0/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/10.2.0/x86_64-pc-linux-gnu/bits/os_defines.h \
   /usr/include/ctype.h \
-  /usr/include/endian.h \
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
@@ -266,6 +228,7 @@
   /usr/include/pthread.h \
   /usr/include/qt/QtCore/QObject \
   /usr/include/qt/QtCore/QScopedPointer \
+  /usr/include/qt/QtCore/qabstractitemmodel.h \
   /usr/include/qt/QtCore/qalgorithms.h \
   /usr/include/qt/QtCore/qarraydata.h \
   /usr/include/qt/QtCore/qatomic.h \
@@ -282,10 +245,8 @@
   /usr/include/qt/QtCore/qcoreevent.h \
   /usr/include/qt/QtCore/qdatastream.h \
   /usr/include/qt/QtCore/qdebug.h \
-  /usr/include/qt/QtCore/qdir.h \
   /usr/include/qt/QtCore/qfile.h \
   /usr/include/qt/QtCore/qfiledevice.h \
-  /usr/include/qt/QtCore/qfileinfo.h \
   /usr/include/qt/QtCore/qflags.h \
   /usr/include/qt/QtCore/qgenericatomic.h \
   /usr/include/qt/QtCore/qglobal.h \
@@ -313,6 +274,7 @@
   /usr/include/qt/QtCore/qrect.h \
   /usr/include/qt/QtCore/qrefcount.h \
   /usr/include/qt/QtCore/qregexp.h \
+  /usr/include/qt/QtCore/qregularexpression.h \
   /usr/include/qt/QtCore/qscopedpointer.h \
   /usr/include/qt/QtCore/qset.h \
   /usr/include/qt/QtCore/qshareddata.h \
@@ -345,7 +307,6 @@
   /usr/include/qt/QtGui/QOpenGLTexture \
   /usr/include/qt/QtGui/QOpenGLVertexArrayObject \
   /usr/include/qt/QtGui/QSurfaceFormat \
-  /usr/include/qt/QtGui/QVector2D \
   /usr/include/qt/QtGui/QVector3D \
   /usr/include/qt/QtGui/QWheelEvent \
   /usr/include/qt/QtGui/qbrush.h \
@@ -384,26 +345,41 @@
   /usr/include/qt/QtGui/qtguiglobal.h \
   /usr/include/qt/QtGui/qtouchdevice.h \
   /usr/include/qt/QtGui/qtransform.h \
+  /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qvector2d.h \
   /usr/include/qt/QtGui/qvector3d.h \
   /usr/include/qt/QtGui/qvector4d.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
-  /usr/include/qt/QtWidgets/QAction \
-  /usr/include/qt/QtWidgets/QFileDialog \
+  /usr/include/qt/QtWidgets/QComboBox \
+  /usr/include/qt/QtWidgets/QHBoxLayout \
+  /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QMainWindow \
-  /usr/include/qt/QtWidgets/QMenu \
-  /usr/include/qt/QtWidgets/QMenuBar \
   /usr/include/qt/QtWidgets/QOpenGLWidget \
+  /usr/include/qt/QtWidgets/QPushButton \
+  /usr/include/qt/QtWidgets/QRadioButton \
+  /usr/include/qt/QtWidgets/QVBoxLayout \
   /usr/include/qt/QtWidgets/QWidget \
-  /usr/include/qt/QtWidgets/qaction.h \
-  /usr/include/qt/QtWidgets/qactiongroup.h \
-  /usr/include/qt/QtWidgets/qdialog.h \
-  /usr/include/qt/QtWidgets/qfiledialog.h \
+  /usr/include/qt/QtWidgets/qabstractbutton.h \
+  /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt/QtWidgets/qabstractslider.h \
+  /usr/include/qt/QtWidgets/qabstractspinbox.h \
+  /usr/include/qt/QtWidgets/qboxlayout.h \
+  /usr/include/qt/QtWidgets/qcombobox.h \
+  /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qgridlayout.h \
+  /usr/include/qt/QtWidgets/qlabel.h \
+  /usr/include/qt/QtWidgets/qlayout.h \
+  /usr/include/qt/QtWidgets/qlayoutitem.h \
   /usr/include/qt/QtWidgets/qmainwindow.h \
-  /usr/include/qt/QtWidgets/qmenu.h \
-  /usr/include/qt/QtWidgets/qmenubar.h \
   /usr/include/qt/QtWidgets/qopenglwidget.h \
+  /usr/include/qt/QtWidgets/qpushbutton.h \
+  /usr/include/qt/QtWidgets/qradiobutton.h \
+  /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
+  /usr/include/qt/QtWidgets/qslider.h \
+  /usr/include/qt/QtWidgets/qstyle.h \
+  /usr/include/qt/QtWidgets/qstyleoption.h \
+  /usr/include/qt/QtWidgets/qtabbar.h \
   /usr/include/qt/QtWidgets/qtabwidget.h \
   /usr/include/qt/QtWidgets/qtwidgets-config.h \
   /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
@@ -414,14 +390,11 @@
   /usr/include/string.h \
   /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
-  /usr/include/sys/select.h \
-  /usr/include/sys/types.h \
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/limits.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/syslimits.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/float.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/stdint.h

@@ -90,9 +90,22 @@ CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/SurfaceSubdivider_autogen/mocs_compilation.cpp -o CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.s
 
+CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o: CMakeFiles/SurfaceSubdivider.dir/flags.make
+CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o: ../src/Halfedge.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o -c /home/wajov/Projects/SurfaceSubdivider/src/Halfedge.cpp
+
+CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wajov/Projects/SurfaceSubdivider/src/Halfedge.cpp > CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.i
+
+CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wajov/Projects/SurfaceSubdivider/src/Halfedge.cpp -o CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.s
+
 CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o: CMakeFiles/SurfaceSubdivider.dir/flags.make
 CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o: ../src/Mesh.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o -c /home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp
 
 CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.i: cmake_force
@@ -102,19 +115,6 @@ CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.i: cmake_force
 CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp -o CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.s
-
-CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o: CMakeFiles/SurfaceSubdivider.dir/flags.make
-CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o: ../src/Model.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o -c /home/wajov/Projects/SurfaceSubdivider/src/Model.cpp
-
-CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wajov/Projects/SurfaceSubdivider/src/Model.cpp > CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.i
-
-CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wajov/Projects/SurfaceSubdivider/src/Model.cpp -o CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.s
 
 CMakeFiles/SurfaceSubdivider.dir/src/RenderWidget.cpp.o: CMakeFiles/SurfaceSubdivider.dir/flags.make
 CMakeFiles/SurfaceSubdivider.dir/src/RenderWidget.cpp.o: ../src/RenderWidget.cpp
@@ -171,8 +171,8 @@ CMakeFiles/SurfaceSubdivider.dir/src/main.cpp.s: cmake_force
 # Object files for target SurfaceSubdivider
 SurfaceSubdivider_OBJECTS = \
 "CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.o" \
+"CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o" \
 "CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o" \
-"CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o" \
 "CMakeFiles/SurfaceSubdivider.dir/src/RenderWidget.cpp.o" \
 "CMakeFiles/SurfaceSubdivider.dir/src/RenderWindow.cpp.o" \
 "CMakeFiles/SurfaceSubdivider.dir/src/Vertex.cpp.o" \
@@ -182,8 +182,8 @@ SurfaceSubdivider_OBJECTS = \
 SurfaceSubdivider_EXTERNAL_OBJECTS =
 
 SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.o
+SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o
 SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o
-SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o
 SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/src/RenderWidget.cpp.o
 SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/src/RenderWindow.cpp.o
 SurfaceSubdivider: CMakeFiles/SurfaceSubdivider.dir/src/Vertex.cpp.o

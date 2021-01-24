@@ -1,9 +1,9 @@
 #include "RenderWidget.h"
 
-RenderWidget::RenderWidget(QWidget *parent, Model &model) : QOpenGLWidget(parent) {
+RenderWidget::RenderWidget(QWidget *parent, Mesh &mesh) : QOpenGLWidget(parent) {
     press = false;
     factor = 1.0f;
-    this->model = model;
+    this->mesh = mesh;
 }
 
 RenderWidget::~RenderWidget() {}
@@ -11,29 +11,41 @@ RenderWidget::~RenderWidget() {}
 void RenderWidget::initializeGL() {
     initializeOpenGLFunctions();
 
-    program.setParent(this);
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/VertexShader.glsl")) {
+    edgeProgram.setParent(this);
+    if (!edgeProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/EdgeVertex.glsl")) {
         std::cerr << "Failed to add vertex shader" << std::endl;
         return;
     }
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/FragmentShader.glsl")) {
+    if (!edgeProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/EdgeFragment.glsl")) {
         std::cerr << "Failed to add fragment shader" << std::endl;
         return;
     }
-    if (!program.link()) {
+    if (!edgeProgram.link()) {
+        std::cerr << "Failed to link shader program" << std::endl;
+        return;
+    }
+
+    facetProgram.setParent(this);
+    if (!facetProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/FacetVertex.glsl")) {
+        std::cerr << "Failed to add vertex shader" << std::endl;
+        return;
+    }
+    if (!facetProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/FacetFragment.glsl")) {
+        std::cerr << "Failed to add fragment shader" << std::endl;
+        return;
+    }
+    if (!facetProgram.link()) {
         std::cerr << "Failed to link shader program" << std::endl;
         return;
     }
 
     glEnable(GL_DEPTH_TEST);
-    model.bind(program);
+    mesh.bind(edgeProgram, facetProgram);
 }
 
 void RenderWidget::paintGL() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    program.bind();
 
     QVector3D lightDirection(0.0f, 0.0f, -1.0f), cameraPosition(0.0f, 0.0f, 5.0f);
     QMatrix4x4 modelMat, viewMat, projectionMat;
@@ -42,12 +54,19 @@ void RenderWidget::paintGL() {
     viewMat.lookAt(cameraPosition, QVector3D(0.0f, 0.0f, 0.0f), QVector3D(0.0f, 1.0f, 0.0f));
     projectionMat.perspective(45.0f, (float)width() / (float)height(), 0.1f, 100.0f);
 
-    program.setUniformValue("model", modelMat);
-    program.setUniformValue("view", viewMat);
-    program.setUniformValue("projection", projectionMat);
-    program.setUniformValue("lightDirection", lightDirection);
-    program.setUniformValue("cameraPosition", cameraPosition);
-    model.render(program);
+    edgeProgram.bind();
+    edgeProgram.setUniformValue("model", modelMat);
+    edgeProgram.setUniformValue("view", viewMat);
+    edgeProgram.setUniformValue("projection", projectionMat);
+    mesh.renderEdge();
+
+    facetProgram.bind();
+    facetProgram.setUniformValue("model", modelMat);
+    facetProgram.setUniformValue("view", viewMat);
+    facetProgram.setUniformValue("projection", projectionMat);
+    facetProgram.setUniformValue("lightDirection", lightDirection);
+    facetProgram.setUniformValue("cameraPosition", cameraPosition);
+    mesh.renderFacet();
 }
 
 void RenderWidget::resizeGL(int w, int h) {

@@ -36,10 +36,6 @@
 		"/opt/clion/bin/cmake/linux/share/cmake-3.17/Modules/Platform/Linux-GNU-CXX.cmake",
 		"/opt/clion/bin/cmake/linux/share/cmake-3.17/Modules/Platform/Linux-GNU.cmake",
 		"/opt/clion/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCommonLanguageInclude.cmake",
-		"/usr/lib64/cmake/assimp-5.0/assimp-config-version.cmake",
-		"/usr/lib64/cmake/assimp-5.0/assimp-config.cmake",
-		"/usr/lib64/cmake/assimp-5.0/assimpTargets.cmake",
-		"/usr/lib64/cmake/assimp-5.0/assimpTargets-release.cmake",
 		"/usr/lib64/cmake/Qt5/Qt5ConfigVersion.cmake",
 		"/usr/lib64/cmake/Qt5/Qt5Config.cmake",
 		"/usr/lib64/cmake/Qt5/Qt5ModuleLocation.cmake",
@@ -106,14 +102,14 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/wajov/Projects/SurfaceSubdivider/include/Halfedge.h",
+			"Mu",
+			"6YEA5652QU/moc_Halfedge.cpp"
+		],
+		[
 			"/home/wajov/Projects/SurfaceSubdivider/include/Mesh.h",
 			"Mu",
 			"6YEA5652QU/moc_Mesh.cpp"
-		],
-		[
-			"/home/wajov/Projects/SurfaceSubdivider/include/Model.h",
-			"Mu",
-			"6YEA5652QU/moc_Model.cpp"
 		],
 		[
 			"/home/wajov/Projects/SurfaceSubdivider/include/RenderWidget.h",
@@ -173,7 +169,7 @@
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
-	"PARALLEL" : 6,
+	"PARALLEL" : 4,
 	"PARSE_CACHE_FILE" : "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/usr/bin/moc",
 	"QT_UIC_EXECUTABLE" : "",
@@ -182,8 +178,8 @@
 	"SETTINGS_FILE" : "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[ "/home/wajov/Projects/SurfaceSubdivider/src/Halfedge.cpp", "Mu" ],
 		[ "/home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp", "Mu" ],
-		[ "/home/wajov/Projects/SurfaceSubdivider/src/Model.cpp", "Mu" ],
 		[ "/home/wajov/Projects/SurfaceSubdivider/src/RenderWidget.cpp", "Mu" ],
 		[ "/home/wajov/Projects/SurfaceSubdivider/src/RenderWindow.cpp", "Mu" ],
 		[ "/home/wajov/Projects/SurfaceSubdivider/src/Vertex.cpp", "Mu" ],

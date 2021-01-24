@@ -5,7 +5,7 @@
 		<Option title="SurfaceSubdivider"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib64\;CMake Files\..\..\..\..\usr\lib64\cmake\;CMake Files\..\..\..\..\usr\lib64\cmake\assimp-5.0\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5Core\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5Gui\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5Widgets\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib64\;CMake Files\..\..\..\..\usr\lib64\cmake\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5Core\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5Gui\;CMake Files\..\..\..\..\usr\lib64\cmake\Qt5Widgets\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug"/>
@@ -115,10 +115,10 @@
 		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/SurfaceSubdivider_autogen/mocs_compilation.cpp">
 			<Option target="SurfaceSubdivider"/>
 		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/include/Mesh.h">
+		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/include/Halfedge.h">
 			<Option target="SurfaceSubdivider"/>
 		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/include/Model.h">
+		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/include/Mesh.h">
 			<Option target="SurfaceSubdivider"/>
 		</Unit>
 		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/include/RenderWidget.h">
@@ -130,10 +130,10 @@
 		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/include/Vertex.h">
 			<Option target="SurfaceSubdivider"/>
 		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp">
+		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/src/Halfedge.cpp">
 			<Option target="SurfaceSubdivider"/>
 		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/src/Model.cpp">
+		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp">
 			<Option target="SurfaceSubdivider"/>
 		</Unit>
 		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/src/RenderWidget.cpp">
@@ -150,18 +150,6 @@
 		</Unit>
 		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
-		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/../../../../usr/lib64/cmake/assimp-5.0/assimp-config-version.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib64\cmake\assimp-5.0\"/>
-		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/../../../../usr/lib64/cmake/assimp-5.0/assimp-config.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib64\cmake\assimp-5.0\"/>
-		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/../../../../usr/lib64/cmake/assimp-5.0/assimpTargets-release.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib64\cmake\assimp-5.0\"/>
-		</Unit>
-		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/../../../../usr/lib64/cmake/assimp-5.0/assimpTargets.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib64\cmake\assimp-5.0\"/>
 		</Unit>
 		<Unit filename="/home/wajov/Projects/SurfaceSubdivider/../../../../usr/lib64/cmake/Qt5/Qt5Config.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib64\cmake\Qt5\"/>

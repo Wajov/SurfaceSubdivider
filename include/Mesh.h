@@ -1,11 +1,10 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include <algorithm>
-#include <cfloat>
+#include <climits>
 #include <vector>
+#include <map>
 
-#include <QVector3D>
 #include <QImage>
 #include <QOpenGLFunctions>
 #include <QOpenGLVertexArrayObject>
@@ -14,24 +13,26 @@
 #include <QOpenGLShaderProgram>
 
 #include "Vertex.h"
+#include "Halfedge.h"
 
 class Mesh : protected QOpenGLFunctions {
 private:
     std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
-    QImage ambientImage, diffuseImage, specularImage, normalImage;
-    QOpenGLTexture *ambientTexture, *diffuseTexture, *specularTexture, *normalTexture;
-    QOpenGLVertexArrayObject *vao;
-    QOpenGLBuffer vbo, ebo;
-    void processTexture(QOpenGLTexture *texture);
+    std::vector<Halfedge> halfedges;
+    std::vector<unsigned int> start, pred, succ, opposite;
+    std::vector<unsigned int> edgeIndices, facetIndices;
+    QOpenGLVertexArrayObject *edgeVAO, *facetVAO;
+    QOpenGLBuffer edgeVBO, edgeEBO, facetVBO, facetEBO;
+    void construct(std::vector<std::vector<unsigned int>> &indices);
 
 public:
-    Mesh(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, QImage &ambientImage, QImage &diffuseImage, QImage &specularImage, QImage &normalImage);
+    Mesh();
+    Mesh(std::vector<Vertex> &vertices, std::vector<std::vector<unsigned int>> &indices);
     ~Mesh();
-    void coordinateRange(float &xMin, float &xMax, float &yMin, float &yMax, float &zMin, float &zMax);
-    void recenter(QVector3D &center);
-    void bind(QOpenGLShaderProgram &program);
-    void render(QOpenGLShaderProgram &program);
+    void bind(QOpenGLShaderProgram &edgeProgram, QOpenGLShaderProgram &facetProgram);
+    void renderEdge();
+    void renderFacet();
+    Mesh subdivisionDooSabin();
 };
 
 #endif

@@ -5,8 +5,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/SurfaceSubdivider_autogen/mocs_compilation.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.o"
+  "/home/wajov/Projects/SurfaceSubdivider/src/Halfedge.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o"
   "/home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.o"
-  "/home/wajov/Projects/SurfaceSubdivider/src/Model.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o"
   "/home/wajov/Projects/SurfaceSubdivider/src/RenderWidget.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/src/RenderWidget.cpp.o"
   "/home/wajov/Projects/SurfaceSubdivider/src/RenderWindow.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/src/RenderWindow.cpp.o"
   "/home/wajov/Projects/SurfaceSubdivider/src/Vertex.cpp" "/home/wajov/Projects/SurfaceSubdivider/cmake-build-debug/CMakeFiles/SurfaceSubdivider.dir/src/Vertex.cpp.o"

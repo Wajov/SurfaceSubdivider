@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_RenderWindow_t {
     QByteArrayData data[3];
-    char stringdata0[26];
+    char stringdata0[24];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,11 +33,11 @@ struct qt_meta_stringdata_RenderWindow_t {
 static const qt_meta_stringdata_RenderWindow_t qt_meta_stringdata_RenderWindow = {
     {
 QT_MOC_LITERAL(0, 0, 12), // "RenderWindow"
-QT_MOC_LITERAL(1, 13, 11), // "selectModel"
-QT_MOC_LITERAL(2, 25, 0) // ""
+QT_MOC_LITERAL(1, 13, 9), // "calculate"
+QT_MOC_LITERAL(2, 23, 0) // ""
 
     },
-    "RenderWindow\0selectModel\0"
+    "RenderWindow\0calculate\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -69,7 +69,7 @@ void RenderWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         auto *_t = static_cast<RenderWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->selectModel(); break;
+        case 0: _t->calculate(); break;
         default: ;
         }
     }

@@ -4,28 +4,35 @@
 #include <string>
 
 #include <QMainWindow>
-#include <QMenuBar>
-#include <QMenu>
-#include <QAction>
-#include <QFileDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QRadioButton>
+#include <QComboBox>
+#include <QPushButton>
 
-#include "Model.h"
+#include "Mesh.h"
 #include "RenderWidget.h"
 
 class RenderWindow : public QMainWindow {
     Q_OBJECT
 private:
-    RenderWidget *widget;
-    QMenuBar *bar;
-    QMenu *menu;
-    QAction *open, *exit;
+    int width, height;
+    QWidget widget;
+    QVBoxLayout vertical;
+    QHBoxLayout horizontal;
+    QLabel methodLabel, iterationLabel;
+    QRadioButton dooSabinButton, catmullClarkButton, loopButton;
+    QComboBox iterationBox;
+    QPushButton calculateButton;
+    RenderWidget *renderWidget;
 
 public:
     RenderWindow(int width, int height);
     ~RenderWindow() override;
 
 private slots:
-    void selectModel();
+    void calculate();
 };
 
 #endif

@@ -1,133 +1,194 @@
 #include "Mesh.h"
+#include <iostream>
+Mesh::Mesh() {
+    QVector3D v0(-1.0f, -1.0f, -1.0f);
+    QVector3D v1(-1.0f, -1.0f, 1.0f);
+    QVector3D v2(-1.0f, 1.0f, -1.0f);
+    QVector3D v3(-1.0f, 1.0f, 1.0f);
+    QVector3D v4(1.0f, -1.0f, -1.0f);
+    QVector3D v5(1.0f, -1.0f, 1.0f);
+    QVector3D v6(1.0f, 1.0f, -1.0f);
+    QVector3D v7(1.0f, 1.0f, 1.0f);
+    vertices = {Vertex(v0), Vertex(v1), Vertex(v2), Vertex(v3), Vertex(v4), Vertex(v5), Vertex(v6), Vertex(v7)};
 
-Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, QImage &ambientImage, QImage &diffuseImage, QImage &specularImage, QImage &normalImage) {
+    std::vector<unsigned int> f0 = {0, 4, 5, 1};
+    std::vector<unsigned int> f1 = {1, 5, 7, 3};
+    std::vector<unsigned int> f2 = {4, 6, 7, 5};
+    std::vector<unsigned int> f3 = {0, 2, 6, 4};
+    std::vector<unsigned int> f4 = {0, 1, 3, 2};
+    std::vector<unsigned int> f5 = {2, 3, 7, 6};
+    std::vector<std::vector<unsigned int>> indices = {f0, f1, f2, f3, f4, f5};
+
+    construct(indices);
+}
+
+Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<std::vector<unsigned int>> &indices) {
     this->vertices = vertices;
-    this->indices = indices;
-    this->ambientImage = ambientImage;
-    this->diffuseImage = diffuseImage;
-    this->specularImage = specularImage;
-    this->normalImage = normalImage;
-    vao = nullptr;
-    ambientTexture = diffuseTexture = specularTexture = normalTexture = nullptr;
+    construct(indices);
 }
 
 Mesh::~Mesh() {
-    delete vao;
-    delete ambientTexture;
-    delete diffuseTexture;
-    delete specularTexture;
-    delete normalTexture;
+    delete edgeVAO;
+    delete facetVAO;
 }
 
-void Mesh::processTexture(QOpenGLTexture *texture) {
-    texture->setWrapMode(QOpenGLTexture::Repeat);
-    texture->setMinificationFilter(QOpenGLTexture::Linear);
-    texture->setMagnificationFilter(QOpenGLTexture::Linear);
-    texture->generateMipMaps();
-}
+void Mesh::construct(std::vector<std::vector<unsigned int>> &indices) {
+    edgeVAO = facetVAO = nullptr;
 
-void Mesh::coordinateRange(float &xMin, float &xMax, float &yMin, float &yMax, float &zMin, float &zMax) {
-    xMin = yMin = zMin = FLT_MAX;
-    xMax = yMax = zMax = -FLT_MAX;
-    for (Vertex &vertex : vertices) {
-        xMin = std::min(xMin, vertex.position.x());
-        xMax = std::max(xMax, vertex.position.x());
-        yMin = std::min(yMin, vertex.position.y());
-        yMax = std::max(yMax, vertex.position.y());
-        zMin = std::min(zMin, vertex.position.z());
-        zMax = std::max(zMax, vertex.position.z());
+    std::map<std::pair<unsigned int, unsigned int>, unsigned int> edges;
+    for (std::vector<unsigned int> index : indices) {
+        unsigned int begin = halfedges.size();
+        start.push_back(begin);
+        for (int i = 0; i < index.size() - 1; i++) {
+            edges.insert(std::make_pair(std::make_pair(index[i], index[i + 1]), halfedges.size()));
+            halfedges.push_back(Halfedge(index[i], index[i + 1]));
+            opposite.push_back(UINT_MAX);
+            auto iter = edges.find(std::make_pair(index[i + 1], index[i]));
+            if (iter != edges.end()) {
+                opposite[opposite.size() - 1] = iter->second;
+                opposite[iter->second] = opposite.size() - 1;
+            }
+        }
+        edges.insert(std::make_pair(std::make_pair(index[index.size() - 1], index[0]), halfedges.size()));
+        halfedges.push_back(Halfedge(index[index.size() - 1], index[0]));
+        opposite.push_back(UINT_MAX);
+        auto iter = edges.find(std::make_pair(index[0], index[index.size() - 1]));
+        if (iter != edges.end()) {
+            opposite[opposite.size() - 1] = iter->second;
+            opposite[iter->second] = opposite.size() - 1;
+        }
+        unsigned int end = halfedges.size();
+        pred.push_back(end - 1);
+        for (int i = begin + 1; i < end; i++)
+            pred.push_back(i - 1);
+        for (int i = begin; i < end - 1; i++)
+            succ.push_back(i + 1);
+        succ.push_back(begin);
+
+        for (int i = 0; i < index.size() - 1; i++) {
+            edgeIndices.push_back(index[i]);
+            edgeIndices.push_back(index[i + 1]);
+        }
+        edgeIndices.push_back(index[index.size() - 1]);
+        edgeIndices.push_back(index[0]);
+
+        for (int i = 1; i < index.size() - 1; i++) {
+            facetIndices.push_back(index[0]);
+            facetIndices.push_back(index[i]);
+            facetIndices.push_back(index[i + 1]);
+        }
     }
 }
 
-void Mesh::recenter(QVector3D &center) {
-    for (Vertex &vertex : vertices)
-        vertex.position -= center;
-}
-
-void Mesh::bind(QOpenGLShaderProgram &program) {
+void Mesh::bind(QOpenGLShaderProgram &edgeProgram, QOpenGLShaderProgram &facetProgram) {
     initializeOpenGLFunctions();
 
-    vao = new QOpenGLVertexArrayObject();
-    QOpenGLVertexArrayObject::Binder binder(vao);
+    edgeVAO = new QOpenGLVertexArrayObject();
+    QOpenGLVertexArrayObject::Binder edgeBinder(edgeVAO);
 
-    vbo = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-    vbo.create();
-    vbo.bind();
-    vbo.allocate(&(vertices[0]), vertices.size() * sizeof(Vertex));
+    edgeVBO = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+    edgeVBO.create();
+    edgeVBO.bind();
+    edgeVBO.allocate(&(vertices[0]), vertices.size() * sizeof(Vertex));
 
-    ebo = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-    ebo.create();
-    ebo.bind();
-    ebo.allocate(&(indices[0]), indices.size() * sizeof(unsigned int));
+    edgeEBO = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    edgeEBO.create();
+    edgeEBO.bind();
+    edgeEBO.allocate(&(edgeIndices[0]), edgeIndices.size() * sizeof(unsigned int));
 
-    int attributePosition = program.attributeLocation("position");
-    program.setAttributeBuffer(attributePosition, GL_FLOAT, offsetof(Vertex, position), 3, sizeof(Vertex));
-    program.enableAttributeArray(attributePosition);
+    int edgeAttributePosition = edgeProgram.attributeLocation("position");
+    edgeProgram.setAttributeBuffer(edgeAttributePosition, GL_FLOAT, offsetof(Vertex, position), 3, sizeof(Vertex));
+    edgeProgram.enableAttributeArray(edgeAttributePosition);
 
-    int attributeNormal = program.attributeLocation("normal");
-    program.setAttributeBuffer(attributeNormal, GL_FLOAT, offsetof(Vertex, normal), 3, sizeof(Vertex));
-    program.enableAttributeArray(attributeNormal);
+    int edgeAttributeNormal = edgeProgram.attributeLocation("normal");
+    edgeProgram.setAttributeBuffer(edgeAttributeNormal, GL_FLOAT, offsetof(Vertex, normal), 3, sizeof(Vertex));
+    edgeProgram.enableAttributeArray(edgeAttributeNormal);
 
-    int attributeTangent = program.attributeLocation("tangent");
-    program.setAttributeBuffer(attributeTangent, GL_FLOAT, offsetof(Vertex, tangent), 3, sizeof(Vertex));
-    program.enableAttributeArray(attributeTangent);
+    facetVAO = new QOpenGLVertexArrayObject();
+    QOpenGLVertexArrayObject::Binder facetBinder(facetVAO);
 
-    int attributeBitanget = program.attributeLocation("bitangent");
-    program.setAttributeBuffer(attributeBitanget, GL_FLOAT, offsetof(Vertex, bitangent), 3, sizeof(Vertex));
-    program.enableAttributeArray(attributeBitanget);
+    facetVBO = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+    facetVBO.create();
+    facetVBO.bind();
+    facetVBO.allocate(&(vertices[0]), vertices.size() * sizeof(Vertex));
 
-    int attributeUV = program.attributeLocation("uv");
-    program.setAttributeBuffer(attributeUV, GL_FLOAT, offsetof(Vertex, uv), 2, sizeof(Vertex));
-    program.enableAttributeArray(attributeUV);
+    facetEBO = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    facetEBO.create();
+    facetEBO.bind();
+    facetEBO.allocate(&(facetIndices[0]), facetIndices.size() * sizeof(unsigned int));
 
-    if (!ambientImage.isNull()) {
-        ambientTexture = new QOpenGLTexture(ambientImage);
-        processTexture(ambientTexture);
-    }
-    if (!diffuseImage.isNull()) {
-        diffuseTexture = new QOpenGLTexture(diffuseImage);
-        processTexture(diffuseTexture);
-    }
-    if (!specularImage.isNull()) {
-        specularTexture = new QOpenGLTexture(specularImage);
-        processTexture(specularTexture);
-    }
-    if (!normalImage.isNull()) {
-        normalTexture = new QOpenGLTexture(normalImage);
-        processTexture(normalTexture);
-    }
+    int attributePosition = facetProgram.attributeLocation("position");
+    facetProgram.setAttributeBuffer(attributePosition, GL_FLOAT, offsetof(Vertex, position), 3, sizeof(Vertex));
+    facetProgram.enableAttributeArray(attributePosition);
+
+    int attributeNormal = facetProgram.attributeLocation("normal");
+    facetProgram.setAttributeBuffer(attributeNormal, GL_FLOAT, offsetof(Vertex, normal), 3, sizeof(Vertex));
+    facetProgram.enableAttributeArray(attributeNormal);
 }
 
-void Mesh::render(QOpenGLShaderProgram &program) {
-    program.setUniformValue("ambientExist", ambientTexture != nullptr);
-    if (ambientTexture != nullptr) {
-        program.setUniformValue("ambientTexture", 0);
-        glActiveTexture(GL_TEXTURE0);
-        ambientTexture->bind();
-    }
+void Mesh::renderEdge() {
+    QOpenGLVertexArrayObject::Binder edgeBinder(edgeVAO);
+    glLineWidth(3.0f);
+    glDrawElements(GL_LINES, edgeIndices.size(), GL_UNSIGNED_INT, nullptr);
+}
 
-    program.setUniformValue("diffuseExist", diffuseTexture != nullptr);
-    if (diffuseTexture != nullptr) {
-        program.setUniformValue("diffuseTexture", 1);
-        glActiveTexture(GL_TEXTURE1);
-        diffuseTexture->bind();
-    }
+void Mesh::renderFacet() {
+    QOpenGLVertexArrayObject::Binder facetBinder(facetVAO);
+    glDrawElements(GL_TRIANGLES, facetIndices.size(), GL_UNSIGNED_INT, nullptr);
+}
 
-    program.setUniformValue("specularExist", specularTexture != nullptr);
-    if (specularTexture != nullptr) {
-        program.setUniformValue("specularTexture", 2);
-        glActiveTexture(GL_TEXTURE2);
-        specularTexture->bind();
-    }
+Mesh Mesh::subdivisionDooSabin() {
+    std::vector<Vertex> vertices;
+    for (unsigned int startHalfedge : start) {
+        std::vector<QVector3D> edgeVertices;
+        QVector3D facetVertex(0.0f, 0.0f, 0.0f);
+        unsigned int halfedge = startHalfedge;
+        do {
+            edgeVertices.push_back((this->vertices[halfedges[halfedge].getSource()].position + this->vertices[halfedges[halfedge].getTarget()].position) / 2.0f);
+            facetVertex += this->vertices[halfedges[halfedge].getSource()].position;
+            halfedge = succ[halfedge];
+        } while (halfedge != startHalfedge);
+        facetVertex /= (float)edgeVertices.size();
 
-    program.setUniformValue("normalExist", normalTexture != nullptr);
-    if (normalTexture != nullptr) {
-        program.setUniformValue("normalTexture", 3);
-        glActiveTexture(GL_TEXTURE3);
-        normalTexture->bind();
+        int i = 0;
+        do {
+            QVector3D position = (this->vertices[halfedges[halfedge].getSource()].position + edgeVertices[i > 0 ? i - 1 : edgeVertices.size() - 1] + edgeVertices[i] + facetVertex) / 4.0f;
+            vertices.push_back(Vertex(position));
+            i++;
+            halfedge = succ[halfedge];
+        } while (halfedge != startHalfedge);
     }
+    std::cout << vertices.size() << std::endl;
 
-    QOpenGLVertexArrayObject::Binder binder(vao);
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+    std::vector<std::vector<unsigned int>> indices;
+    for (unsigned int startHalfedge : start) {
+        unsigned int halfedge = startHalfedge;
+        std::vector<unsigned int> index;
+        do {
+            index.push_back(halfedge);
+            halfedge = succ[halfedge];
+        } while (halfedge != startHalfedge);
+        indices.push_back(index);
+    }
+    bool *flag = new bool[halfedges.size()];
+    memset(flag, false, halfedges.size() * sizeof(bool));
+    for (unsigned int i = 0; i < halfedges.size(); i++)
+        if (!flag[i]) {
+            flag[i] = flag[opposite[i]] = true;
+            indices.push_back({i, succ[opposite[i]], opposite[i], succ[i]});
+        }
+    memset(flag, false, halfedges.size() * sizeof(bool));
+    for (unsigned int i = 0; i < halfedges.size(); i++)
+        if (!flag[i]) {
+            unsigned int j = i;
+            std::vector<unsigned int> index;
+            do {
+                flag[j] = true;
+                index.push_back(j);
+                j = opposite[pred[j]];
+            } while (j != i);
+            indices.push_back(index);
+        }
+
+    return Mesh(vertices, indices);
 }

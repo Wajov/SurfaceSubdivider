@@ -1,9 +1,9 @@
 #ifndef RENDER_WIDGET_H
 #define RENDER_WIDGET_H
 
+#include <cmath>
 #include <climits>
 #include <iostream>
-#include <string>
 
 #include <QVector3D>
 #include <QMatrix4x4>
@@ -15,7 +15,7 @@
 #include <QMouseEvent>
 #include <QWheelEvent>
 
-#include "Model.h"
+#include "Mesh.h"
 
 class RenderWidget : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
@@ -24,8 +24,8 @@ private:
     int lastX, lastY;
     float factor;
     QMatrix4x4 rotate;
-    Model model;
-    QOpenGLShaderProgram program;
+    Mesh mesh;
+    QOpenGLShaderProgram edgeProgram, facetProgram;
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int w, int h) override;
@@ -35,7 +35,7 @@ private:
     void wheelEvent(QWheelEvent *event) override;
 
 public:
-    RenderWidget(QWidget *parent, Model &model);
+    RenderWidget(QWidget *parent, Mesh &mesh);
     ~RenderWidget() override;
 };
 

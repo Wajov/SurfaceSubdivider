@@ -183,6 +183,33 @@ SurfaceSubdivider_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/SurfaceSubdivider_autogen/mocs_compilation.cpp.s
 .PHONY : SurfaceSubdivider_autogen/mocs_compilation.cpp.s
 
+src/Halfedge.o: src/Halfedge.cpp.o
+
+.PHONY : src/Halfedge.o
+
+# target to build an object file
+src/Halfedge.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.o
+.PHONY : src/Halfedge.cpp.o
+
+src/Halfedge.i: src/Halfedge.cpp.i
+
+.PHONY : src/Halfedge.i
+
+# target to preprocess a source file
+src/Halfedge.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.i
+.PHONY : src/Halfedge.cpp.i
+
+src/Halfedge.s: src/Halfedge.cpp.s
+
+.PHONY : src/Halfedge.s
+
+# target to generate assembly for a file
+src/Halfedge.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Halfedge.cpp.s
+.PHONY : src/Halfedge.cpp.s
+
 src/Mesh.o: src/Mesh.cpp.o
 
 .PHONY : src/Mesh.o
@@ -209,33 +236,6 @@ src/Mesh.s: src/Mesh.cpp.s
 src/Mesh.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Mesh.cpp.s
 .PHONY : src/Mesh.cpp.s
-
-src/Model.o: src/Model.cpp.o
-
-.PHONY : src/Model.o
-
-# target to build an object file
-src/Model.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.o
-.PHONY : src/Model.cpp.o
-
-src/Model.i: src/Model.cpp.i
-
-.PHONY : src/Model.i
-
-# target to preprocess a source file
-src/Model.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.i
-.PHONY : src/Model.cpp.i
-
-src/Model.s: src/Model.cpp.s
-
-.PHONY : src/Model.s
-
-# target to generate assembly for a file
-src/Model.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SurfaceSubdivider.dir/build.make CMakeFiles/SurfaceSubdivider.dir/src/Model.cpp.s
-.PHONY : src/Model.cpp.s
 
 src/RenderWidget.o: src/RenderWidget.cpp.o
 
@@ -358,12 +358,12 @@ help:
 	@echo "... SurfaceSubdivider_autogen/mocs_compilation.o"
 	@echo "... SurfaceSubdivider_autogen/mocs_compilation.i"
 	@echo "... SurfaceSubdivider_autogen/mocs_compilation.s"
+	@echo "... src/Halfedge.o"
+	@echo "... src/Halfedge.i"
+	@echo "... src/Halfedge.s"
 	@echo "... src/Mesh.o"
 	@echo "... src/Mesh.i"
 	@echo "... src/Mesh.s"
-	@echo "... src/Model.o"
-	@echo "... src/Model.i"
-	@echo "... src/Model.s"
 	@echo "... src/RenderWidget.o"
 	@echo "... src/RenderWidget.i"
 	@echo "... src/RenderWidget.s"

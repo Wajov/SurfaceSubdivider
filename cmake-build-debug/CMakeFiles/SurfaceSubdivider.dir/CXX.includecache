@@ -6,14 +6,14 @@
 
 #IncludeRegexTransform: 
 
+../include/Halfedge.h
+
 ../include/Mesh.h
-algorithm
--
-cfloat
+climits
 -
 vector
 -
-QVector3D
+map
 -
 QImage
 -
@@ -29,16 +29,18 @@ QOpenGLShaderProgram
 -
 Vertex.h
 ../include/Vertex.h
+Halfedge.h
+../include/Halfedge.h
 
 ../include/Vertex.h
-QVector2D
--
 QVector3D
 -
 
 /home/wajov/Projects/SurfaceSubdivider/src/Mesh.cpp
 Mesh.h
 /home/wajov/Projects/SurfaceSubdivider/src/Mesh.h
+iostream
+-
 
 /usr/include/qt/QtCore/QObject
 qobject.h
@@ -757,10 +759,6 @@ qopenglvertexarrayobject.h
 /usr/include/qt/QtGui/QSurfaceFormat
 qsurfaceformat.h
 /usr/include/qt/QtGui/qsurfaceformat.h
-
-/usr/include/qt/QtGui/QVector2D
-qvector2d.h
-/usr/include/qt/QtGui/qvector2d.h
 
 /usr/include/qt/QtGui/QVector3D
 qvector3d.h

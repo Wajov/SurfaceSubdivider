@@ -91,10 +91,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/lib64/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake"
   "/usr/lib64/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake"
   "/usr/lib64/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake"
-  "/usr/lib64/cmake/assimp-5.0/assimp-config-version.cmake"
-  "/usr/lib64/cmake/assimp-5.0/assimp-config.cmake"
-  "/usr/lib64/cmake/assimp-5.0/assimpTargets-release.cmake"
-  "/usr/lib64/cmake/assimp-5.0/assimpTargets.cmake"
   )
 
 # The corresponding makefile is:
