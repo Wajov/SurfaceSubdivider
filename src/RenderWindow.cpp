@@ -14,13 +14,15 @@ RenderWindow::RenderWindow(int width, int height) : QMainWindow() {
     loopButton.setParent(this);
     loopButton.setText("Loop");
     iterationLabel.setParent(this);
-    iterationLabel.setText("Number of iteration:");
+    iterationLabel.setText("Number of iterations:");
     iterationBox.setParent(this);
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 9; i++)
         iterationBox.addItem(QString::number(i));
     calculateButton.setParent(this);
     calculateButton.setText("Calculate");
     connect(&calculateButton, SIGNAL(clicked(bool)), this, SLOT(calculate()));
+    vertexLabel.setParent(this);
+    facetLabel.setParent(this);
     vertical.addWidget(&methodLabel);
     vertical.addWidget(&dooSabinButton);
     vertical.addWidget(&catmullClarkButton);
@@ -28,18 +30,18 @@ RenderWindow::RenderWindow(int width, int height) : QMainWindow() {
     vertical.addWidget(&iterationLabel);
     vertical.addWidget(&iterationBox);
     vertical.addWidget(&calculateButton);
+    vertical.addWidget(&vertexLabel);
+    vertical.addWidget(&facetLabel);
     vertical.addStretch();
 
-    Mesh mesh;
-    renderWidget = new RenderWidget(this, mesh);
-    renderWidget->setMinimumSize(this->width, this->height);
-
+    renderWidget = nullptr;
     horizontal.addLayout(&vertical);
-    horizontal.addWidget(renderWidget);
 
     widget.setParent(this);
     widget.setLayout(&horizontal);
     setCentralWidget(&widget);
+
+    calculate();
 }
 
 RenderWindow::~RenderWindow() {}
@@ -47,7 +49,14 @@ RenderWindow::~RenderWindow() {}
 void RenderWindow::calculate() {
     Mesh mesh;
     for (int i = 0; i < iterationBox.currentIndex(); i++)
-        mesh = mesh.subdivisionDooSabin();
+        if (dooSabinButton.isChecked())
+            mesh = mesh.subdivide(new DooSabinSubdivider());
+        else if (catmullClarkButton.isChecked())
+            mesh = mesh.subdivide(new CatmullClarkSubdivider());
+        else if (loopButton.isChecked())
+            mesh = mesh.subdivide(new LoopSubdivider());
+    vertexLabel.setText(QString("Number of Vertices: %1").arg(mesh.numberOfVertices()));
+    facetLabel.setText(QString("Number of Facets: %1").arg(mesh.numberOfFacets()));
     delete renderWidget;
     renderWidget = new RenderWidget(this, mesh);
     renderWidget->setMinimumSize(width, height);

@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#include <iostream>
+
 Mesh::Mesh() {
     QVector3D v0(-1.0f, -1.0f, -1.0f);
     QVector3D v1(-1.0f, -1.0f, 1.0f);
@@ -9,7 +9,7 @@ Mesh::Mesh() {
     QVector3D v5(1.0f, -1.0f, 1.0f);
     QVector3D v6(1.0f, 1.0f, -1.0f);
     QVector3D v7(1.0f, 1.0f, 1.0f);
-    vertices = {Vertex(v0), Vertex(v1), Vertex(v2), Vertex(v3), Vertex(v4), Vertex(v5), Vertex(v6), Vertex(v7)};
+    std::vector<QVector3D> vertices = {v0, v1, v2, v3, v4, v5, v6, v7};
 
     std::vector<unsigned int> f0 = {0, 4, 5, 1};
     std::vector<unsigned int> f1 = {1, 5, 7, 3};
@@ -19,12 +19,11 @@ Mesh::Mesh() {
     std::vector<unsigned int> f5 = {2, 3, 7, 6};
     std::vector<std::vector<unsigned int>> indices = {f0, f1, f2, f3, f4, f5};
 
-    construct(indices);
+    construct(vertices, indices);
 }
 
-Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<std::vector<unsigned int>> &indices) {
-    this->vertices = vertices;
-    construct(indices);
+Mesh::Mesh(std::vector<QVector3D> &vertices, std::vector<std::vector<unsigned int>> &indices) {
+    construct(vertices,indices);
 }
 
 Mesh::~Mesh() {
@@ -32,39 +31,11 @@ Mesh::~Mesh() {
     delete facetVAO;
 }
 
-void Mesh::construct(std::vector<std::vector<unsigned int>> &indices) {
+void Mesh::construct(std::vector<QVector3D> &vertices, std::vector<std::vector<unsigned int>> &indices) {
+    this->vertices = vertices;
+    this->indices = indices;
     edgeVAO = facetVAO = nullptr;
-
-    std::map<std::pair<unsigned int, unsigned int>, unsigned int> edges;
-    for (std::vector<unsigned int> index : indices) {
-        unsigned int begin = halfedges.size();
-        start.push_back(begin);
-        for (int i = 0; i < index.size() - 1; i++) {
-            edges.insert(std::make_pair(std::make_pair(index[i], index[i + 1]), halfedges.size()));
-            halfedges.push_back(Halfedge(index[i], index[i + 1]));
-            opposite.push_back(UINT_MAX);
-            auto iter = edges.find(std::make_pair(index[i + 1], index[i]));
-            if (iter != edges.end()) {
-                opposite[opposite.size() - 1] = iter->second;
-                opposite[iter->second] = opposite.size() - 1;
-            }
-        }
-        edges.insert(std::make_pair(std::make_pair(index[index.size() - 1], index[0]), halfedges.size()));
-        halfedges.push_back(Halfedge(index[index.size() - 1], index[0]));
-        opposite.push_back(UINT_MAX);
-        auto iter = edges.find(std::make_pair(index[0], index[index.size() - 1]));
-        if (iter != edges.end()) {
-            opposite[opposite.size() - 1] = iter->second;
-            opposite[iter->second] = opposite.size() - 1;
-        }
-        unsigned int end = halfedges.size();
-        pred.push_back(end - 1);
-        for (int i = begin + 1; i < end; i++)
-            pred.push_back(i - 1);
-        for (int i = begin; i < end - 1; i++)
-            succ.push_back(i + 1);
-        succ.push_back(begin);
-
+    for (std::vector<unsigned int> index : this->indices) {
         for (int i = 0; i < index.size() - 1; i++) {
             edgeIndices.push_back(index[i]);
             edgeIndices.push_back(index[i + 1]);
@@ -80,6 +51,14 @@ void Mesh::construct(std::vector<std::vector<unsigned int>> &indices) {
     }
 }
 
+int Mesh::numberOfVertices() {
+    return vertices.size();
+}
+
+int Mesh::numberOfFacets() {
+    return indices.size();
+}
+
 void Mesh::bind(QOpenGLShaderProgram &edgeProgram, QOpenGLShaderProgram &facetProgram) {
     initializeOpenGLFunctions();
 
@@ -89,20 +68,16 @@ void Mesh::bind(QOpenGLShaderProgram &edgeProgram, QOpenGLShaderProgram &facetPr
     edgeVBO = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
     edgeVBO.create();
     edgeVBO.bind();
-    edgeVBO.allocate(&(vertices[0]), vertices.size() * sizeof(Vertex));
+    edgeVBO.allocate(&(vertices[0]), vertices.size() * sizeof(QVector3D));
 
     edgeEBO = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     edgeEBO.create();
     edgeEBO.bind();
     edgeEBO.allocate(&(edgeIndices[0]), edgeIndices.size() * sizeof(unsigned int));
 
-    int edgeAttributePosition = edgeProgram.attributeLocation("position");
-    edgeProgram.setAttributeBuffer(edgeAttributePosition, GL_FLOAT, offsetof(Vertex, position), 3, sizeof(Vertex));
-    edgeProgram.enableAttributeArray(edgeAttributePosition);
-
-    int edgeAttributeNormal = edgeProgram.attributeLocation("normal");
-    edgeProgram.setAttributeBuffer(edgeAttributeNormal, GL_FLOAT, offsetof(Vertex, normal), 3, sizeof(Vertex));
-    edgeProgram.enableAttributeArray(edgeAttributeNormal);
+    int edgeAttribute = edgeProgram.attributeLocation("position");
+    edgeProgram.setAttributeBuffer(edgeAttribute, GL_FLOAT, 0, 3, sizeof(QVector3D));
+    edgeProgram.enableAttributeArray(edgeAttribute);
 
     facetVAO = new QOpenGLVertexArrayObject();
     QOpenGLVertexArrayObject::Binder facetBinder(facetVAO);
@@ -110,20 +85,16 @@ void Mesh::bind(QOpenGLShaderProgram &edgeProgram, QOpenGLShaderProgram &facetPr
     facetVBO = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
     facetVBO.create();
     facetVBO.bind();
-    facetVBO.allocate(&(vertices[0]), vertices.size() * sizeof(Vertex));
+    facetVBO.allocate(&(vertices[0]), vertices.size() * sizeof(QVector3D));
 
     facetEBO = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     facetEBO.create();
     facetEBO.bind();
     facetEBO.allocate(&(facetIndices[0]), facetIndices.size() * sizeof(unsigned int));
 
-    int attributePosition = facetProgram.attributeLocation("position");
-    facetProgram.setAttributeBuffer(attributePosition, GL_FLOAT, offsetof(Vertex, position), 3, sizeof(Vertex));
-    facetProgram.enableAttributeArray(attributePosition);
-
-    int attributeNormal = facetProgram.attributeLocation("normal");
-    facetProgram.setAttributeBuffer(attributeNormal, GL_FLOAT, offsetof(Vertex, normal), 3, sizeof(Vertex));
-    facetProgram.enableAttributeArray(attributeNormal);
+    int facetAttribute = facetProgram.attributeLocation("position");
+    facetProgram.setAttributeBuffer(facetAttribute, GL_FLOAT, 0, 3, sizeof(QVector3D));
+    facetProgram.enableAttributeArray(facetAttribute);
 }
 
 void Mesh::renderEdge() {
@@ -137,58 +108,11 @@ void Mesh::renderFacet() {
     glDrawElements(GL_TRIANGLES, facetIndices.size(), GL_UNSIGNED_INT, nullptr);
 }
 
-Mesh Mesh::subdivisionDooSabin() {
-    std::vector<Vertex> vertices;
-    for (unsigned int startHalfedge : start) {
-        std::vector<QVector3D> edgeVertices;
-        QVector3D facetVertex(0.0f, 0.0f, 0.0f);
-        unsigned int halfedge = startHalfedge;
-        do {
-            edgeVertices.push_back((this->vertices[halfedges[halfedge].getSource()].position + this->vertices[halfedges[halfedge].getTarget()].position) / 2.0f);
-            facetVertex += this->vertices[halfedges[halfedge].getSource()].position;
-            halfedge = succ[halfedge];
-        } while (halfedge != startHalfedge);
-        facetVertex /= (float)edgeVertices.size();
-
-        int i = 0;
-        do {
-            QVector3D position = (this->vertices[halfedges[halfedge].getSource()].position + edgeVertices[i > 0 ? i - 1 : edgeVertices.size() - 1] + edgeVertices[i] + facetVertex) / 4.0f;
-            vertices.push_back(Vertex(position));
-            i++;
-            halfedge = succ[halfedge];
-        } while (halfedge != startHalfedge);
-    }
-    std::cout << vertices.size() << std::endl;
-
+Mesh Mesh::subdivide(Subdivider *subdivider) {
+    std::vector<QVector3D> vertices;
     std::vector<std::vector<unsigned int>> indices;
-    for (unsigned int startHalfedge : start) {
-        unsigned int halfedge = startHalfedge;
-        std::vector<unsigned int> index;
-        do {
-            index.push_back(halfedge);
-            halfedge = succ[halfedge];
-        } while (halfedge != startHalfedge);
-        indices.push_back(index);
-    }
-    bool *flag = new bool[halfedges.size()];
-    memset(flag, false, halfedges.size() * sizeof(bool));
-    for (unsigned int i = 0; i < halfedges.size(); i++)
-        if (!flag[i]) {
-            flag[i] = flag[opposite[i]] = true;
-            indices.push_back({i, succ[opposite[i]], opposite[i], succ[i]});
-        }
-    memset(flag, false, halfedges.size() * sizeof(bool));
-    for (unsigned int i = 0; i < halfedges.size(); i++)
-        if (!flag[i]) {
-            unsigned int j = i;
-            std::vector<unsigned int> index;
-            do {
-                flag[j] = true;
-                index.push_back(j);
-                j = opposite[pred[j]];
-            } while (j != i);
-            indices.push_back(index);
-        }
+    subdivider->construct(this->vertices, this->indices);
+    subdivider->subdivide(vertices, indices);
 
     return Mesh(vertices, indices);
 }

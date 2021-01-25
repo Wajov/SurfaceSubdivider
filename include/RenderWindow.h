@@ -12,6 +12,10 @@
 #include <QPushButton>
 
 #include "Mesh.h"
+#include "Subdivider.h"
+#include "DooSabinSubdivider.h"
+#include "CatmullClarkSubdivider.h"
+#include "LoopSubdivider.h"
 #include "RenderWidget.h"
 
 class RenderWindow : public QMainWindow {
@@ -21,7 +25,7 @@ private:
     QWidget widget;
     QVBoxLayout vertical;
     QHBoxLayout horizontal;
-    QLabel methodLabel, iterationLabel;
+    QLabel methodLabel, iterationLabel, vertexLabel, facetLabel;
     QRadioButton dooSabinButton, catmullClarkButton, loopButton;
     QComboBox iterationBox;
     QPushButton calculateButton;

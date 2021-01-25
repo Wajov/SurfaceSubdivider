@@ -12,11 +12,11 @@ void RenderWidget::initializeGL() {
     initializeOpenGLFunctions();
 
     edgeProgram.setParent(this);
-    if (!edgeProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/EdgeVertex.glsl")) {
+    if (!edgeProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/VertexShader.glsl")) {
         std::cerr << "Failed to add vertex shader" << std::endl;
         return;
     }
-    if (!edgeProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/EdgeFragment.glsl")) {
+    if (!edgeProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/EdgeFragmentShader.glsl")) {
         std::cerr << "Failed to add fragment shader" << std::endl;
         return;
     }
@@ -26,11 +26,11 @@ void RenderWidget::initializeGL() {
     }
 
     facetProgram.setParent(this);
-    if (!facetProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/FacetVertex.glsl")) {
+    if (!facetProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "shader/VertexShader.glsl")) {
         std::cerr << "Failed to add vertex shader" << std::endl;
         return;
     }
-    if (!facetProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/FacetFragment.glsl")) {
+    if (!facetProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "shader/FacetFragmentShader.glsl")) {
         std::cerr << "Failed to add fragment shader" << std::endl;
         return;
     }
@@ -47,7 +47,7 @@ void RenderWidget::paintGL() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    QVector3D lightDirection(0.0f, 0.0f, -1.0f), cameraPosition(0.0f, 0.0f, 5.0f);
+    QVector3D lightPosition(2.0f, 2.0f, 2.0f), cameraPosition(0.0f, 0.0f, 5.0f);
     QMatrix4x4 modelMat, viewMat, projectionMat;
     modelMat = rotate;
     modelMat.scale(factor);
@@ -64,7 +64,7 @@ void RenderWidget::paintGL() {
     facetProgram.setUniformValue("model", modelMat);
     facetProgram.setUniformValue("view", viewMat);
     facetProgram.setUniformValue("projection", projectionMat);
-    facetProgram.setUniformValue("lightDirection", lightDirection);
+    facetProgram.setUniformValue("lightPosition", lightPosition);
     facetProgram.setUniformValue("cameraPosition", cameraPosition);
     mesh.renderFacet();
 }

@@ -5,11 +5,13 @@ set(CMAKE_AUTOMOC ON)
 
 include_directories(include)
 set(HEADER
-        include/Halfedge.h
         include/Mesh.h
         include/RenderWidget.h
         include/RenderWindow.h
-        include/Vertex.h
+        include/Subdivider.h
+        include/DooSabinSubdivider.h
+        include/CatmullClarkSubdivider.h
+        include/LoopSubdivider.h
 )
 aux_source_directory(src SOURCE)
 add_executable(SurfaceSubdivider
