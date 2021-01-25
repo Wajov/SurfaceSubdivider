@@ -14,9 +14,9 @@ Mesh::Mesh() {
     std::vector<unsigned int> f0 = {0, 4, 5, 1};
     std::vector<unsigned int> f1 = {1, 5, 7, 3};
     std::vector<unsigned int> f2 = {4, 6, 7, 5};
-    std::vector<unsigned int> f3 = {0, 2, 6, 4};
-    std::vector<unsigned int> f4 = {0, 1, 3, 2};
-    std::vector<unsigned int> f5 = {2, 3, 7, 6};
+    std::vector<unsigned int> f3 = {2, 6, 4, 0};
+    std::vector<unsigned int> f4 = {1, 3, 2, 0};
+    std::vector<unsigned int> f5 = {3, 7, 6, 2};
     std::vector<std::vector<unsigned int>> indices = {f0, f1, f2, f3, f4, f5};
 
     construct(vertices, indices);
